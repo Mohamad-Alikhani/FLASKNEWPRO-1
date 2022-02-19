@@ -5,24 +5,24 @@ Created on Sat Jul 25 12:02:51 2020
 @author: hp
 """
 
-from flask import Flask, render_template, request, flash, redirect,url_for, jsonify, session 
+from flask import Flask, render_template, request, flash, redirect,url_for, jsonify, session
 from flask import Response,send_file
-application = Flask(__name__)
+app = Flask(__name__)
 import rds_db as db
 import pymysql
 
 
-@application.route('/')
+@app.route('/')
 def home():
     return render_template('homePage.html')
-@application.route('/login')
+@app.route('/login')
 def index():
     return render_template('login.html')
 
 
 
-@application.route('/loginInfo',methods = ['POST','GET'])
-def login():  
+@app.route('/loginInfo',methods = ['POST','GET'])
+def login():
     if request.method == 'POST':
         email_html = request.form['email']
         password_html = request.form['password']
@@ -32,11 +32,11 @@ def login():
                password_temp = (i[1])
                if email_html == emails_temp and password_html == password_temp :
                 return 'success'
-        return render_template("wrongpwd.html")           
-     
-            
-    
-@application.route('/signup')
+        return render_template("wrongpwd.html")
+
+
+
+@app.route('/signup')
 def signup():
     return render_template('registration.html')
 
@@ -45,7 +45,7 @@ def signup():
 
 
 
-@application.route('/registrationInfo',methods = ['POST','GET'])
+@app.route('/registrationInfo',methods = ['POST','GET'])
 def registration():
     if request.method == 'POST':
         fName = request.form['fName']
@@ -59,5 +59,5 @@ def registration():
 
 
 if __name__ == "__main__":
-    
-    application.run(debug=True)
+
+    app.run(debug=True)
